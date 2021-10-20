@@ -1,0 +1,22 @@
+name: sd
+version: "0.1.0"
+author: Alex Ambarchian <alex@alexambarchian.com>
+about: Search for and run shell scripts
+
+settings:
+  - ArgRequiredElseHelp
+
+args:
+  - directory:
+      help: set root directory for this search
+      short: d
+      long: dir
+      takes_value: true
+      value_name: DIRECTORY
+  - FILE:
+      help: file to search for
+      required: true
+      index: 1
+  - ARGS:
+      help: arguments to pass the script
+      multiple: true
