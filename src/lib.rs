@@ -30,7 +30,10 @@ fn search(dir: &Path, file: &str) -> Option<String> {
         let dir_entry: std::fs::DirEntry = entry.unwrap();
         let path = dir_entry.path();
         if path.is_dir() {
-            return search(&path, file);
+            match search(&path, file) {
+                Some(name) => return Some(name),
+                None => continue
+            }
         }
 
         if let Some(name) = path.file_name() {
