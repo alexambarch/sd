@@ -4,8 +4,8 @@ extern crate clap;
 use std::env::current_dir;
 use std::path::Path;
 
-use sd::run;
 use clap::App;
+use sd::run;
 
 fn main() {
     let yaml = load_yaml!("cli.yaml");
@@ -13,15 +13,10 @@ fn main() {
 
     let mut dir: &Path = &current_dir().unwrap();
     let mut args: Vec<&str> = vec![];
-    let script = matches.value_of("FILE")
-                        .unwrap()
-                        .to_string();
-
+    let script = matches.value_of("FILE").unwrap().to_string();
 
     if matches.is_present("ARGS") {
-        args = matches.values_of("ARGS")
-                      .unwrap()
-                      .collect();
+        args = matches.values_of("ARGS").unwrap().collect();
     }
 
     if matches.is_present("directory") {
