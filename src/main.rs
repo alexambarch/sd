@@ -9,11 +9,11 @@ use sd::run;
 
 fn main() {
     let yaml = load_yaml!("cli.yaml");
-    let matches = App::from_yaml(yaml).get_matches();
+    let matches = App::from_yaml(yaml).get_matches().clone();
 
     let mut dir: &Path = &current_dir().unwrap();
     let mut args: Vec<&str> = vec![];
-    let script: &str = matches.value_of("FILE").unwrap();
+    let filename = matches.value_of("FILE").unwrap().to_string();
 
     if matches.is_present("ARGS") {
         args = matches.values_of("ARGS").unwrap().collect();
@@ -23,5 +23,5 @@ fn main() {
         dir = Path::new(matches.value_of("directory").unwrap());
     }
 
-    run(dir, script, args);
+    run(dir, filename, args);
 }

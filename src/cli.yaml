@@ -13,6 +13,10 @@ args:
       long: dir
       takes_value: true
       value_name: DIRECTORY
+  - cat:
+      help: cat the file instead of running it
+      short: c
+      long: cat
   - FILE:
       help: file to search for
       required: true
