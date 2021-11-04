@@ -13,7 +13,7 @@ fn main() {
 
     let mut dir: &Path = &current_dir().unwrap();
     let mut args: Vec<&str> = vec![];
-    let script = matches.value_of("FILE").unwrap().to_string();
+    let script: &str = matches.value_of("FILE").unwrap();
 
     if matches.is_present("ARGS") {
         args = matches.values_of("ARGS").unwrap().collect();
