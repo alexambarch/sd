@@ -36,14 +36,14 @@ pub fn run(root: &Path, filename: String, args: Vec<&str>) {
  * */
 fn search(dir: &Path, file: String) -> Option<String> {
     // Vector to hold thread references
-    let mut threads: Vec<Box<JoinHandle<Option<String>>>> = Vec::new();
+    let mut threads: Vec<JoinHandle<Option<String>>> = Vec::new();
     for entry in read_dir(dir).unwrap() {
         let dir_entry: std::fs::DirEntry = entry.unwrap();
         let path = dir_entry.path();
         if path.is_dir() {
             // If the path is a directory, recursively search it
             let file_ref = file.clone();
-            threads.push(Box::new(thread::spawn(move || search(&path, file_ref))));
+            threads.push(thread::spawn(move || search(&path, file_ref)));
         } else if let Some(name) = path.file_stem() {
             let name = name.to_string_lossy();
             if name == file {
