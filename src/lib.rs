@@ -44,7 +44,7 @@ fn search(dir: &Path, file: String) -> Option<String> {
             // If the path is a directory, recursively search it
             let file_ref = file.clone();
             threads.push(Box::new(thread::spawn(move || search(&path, file_ref))));
-        } else if let Some(name) = path.file_name() {
+        } else if let Some(name) = path.file_stem() {
             let name = name.to_string_lossy();
             if name == file {
                 return Some(path.to_str().unwrap().to_owned());
