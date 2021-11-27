@@ -11,6 +11,11 @@ fn main() {
     let yaml = load_yaml!("cli.yaml");
     let matches = App::from_yaml(yaml).get_matches();
 
+    // Build config from command line arguments
+    let config = Config {
+        cat: matches.is_present("cat"),
+    };
+
     let mut dir: &Path = &current_dir().unwrap();
     let mut args: Vec<&str> = vec![];
     let script = matches.value_of("FILE").unwrap().to_string();
@@ -23,9 +28,6 @@ fn main() {
         dir = Path::new(matches.value_of("directory").unwrap());
     }
 
-    let config = Config {
-        cat: matches.is_present("cat"),
-    };
 
     run(dir, script, args, config);
 }
