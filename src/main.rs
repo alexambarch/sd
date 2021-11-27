@@ -5,7 +5,7 @@ use std::env::current_dir;
 use std::path::Path;
 
 use clap::App;
-use sd::run;
+use sd::{run, Config};
 
 fn main() {
     let yaml = load_yaml!("cli.yaml");
@@ -23,5 +23,9 @@ fn main() {
         dir = Path::new(matches.value_of("directory").unwrap());
     }
 
-    run(dir, script, args);
+    let config = Config {
+        cat: matches.is_present("cat"),
+    };
+
+    run(dir, script, args, config);
 }

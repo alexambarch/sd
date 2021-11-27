@@ -7,13 +7,20 @@ use std::process::exit;
 /*
  * Run the search for the file, and then run the file with the supplied args.
  * */
-pub fn run(root: &Path, filename: String, args: Vec<&str>) {
-    println!("Searching for {}", filename);
-
+pub fn run(root: &Path, filename: String, args: Vec<&str>, config: Config) {
     match search(root, &filename) {
         Some(filename) => {
-            let error = exec::Command::new("sh").arg(filename).args(&args).exec();
-            eprintln!("{}", error);
+            if config.cat {
+                eprintln!(
+                    "{}",
+                    exec::Command::new("cat").arg(filename).exec()
+                );
+            } else {
+                eprintln!(
+                    "{}",
+                    exec::Command::new("cat").arg(filename).args(&args).exec()
+                );
+            }
         }
         None => {
             eprintln!("Cannot find file specified.");
@@ -32,7 +39,7 @@ fn search(dir: &Path, file: &str) -> Option<String> {
         if path.is_dir() {
             match search(&path, file) {
                 Some(name) => return Some(name),
-                None => continue
+                None => continue,
             }
         }
 
@@ -44,4 +51,12 @@ fn search(dir: &Path, file: &str) -> Option<String> {
         }
     }
     None
+}
+
+/*
+ * The values of the CLI flags
+ * */
+#[derive(Debug)]
+pub struct Config {
+    pub cat: bool,
 }
