@@ -18,7 +18,7 @@ pub fn run(root: &Path, filename: String, args: Vec<&str>, config: Config) {
             } else {
                 eprintln!(
                     "{}",
-                    exec::Command::new("cat").arg(filename).args(&args).exec()
+                    exec::Command::new("sh").arg(filename).args(&args).exec()
                 );
             }
         }
