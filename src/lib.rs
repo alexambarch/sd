@@ -36,7 +36,7 @@ fn search(dir: &Path, file: &str) -> Option<String> {
             }
         }
 
-        if let Some(name) = path.file_name() {
+        if let Some(name) = path.file_stem() {
             let name = name.to_string_lossy();
             if name == file {
                 return Some(path.to_str().unwrap().to_owned());
